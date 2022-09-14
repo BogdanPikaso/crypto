@@ -10,8 +10,8 @@ public class Controller {
     @Autowired
     CryptoService cryptoService;
 
-    @GetMapping(path = "get")
-    void callService() {
-        cryptoService.callService();
+    @GetMapping(path = "get/eth")
+    String getEthereumUsdRate() {
+        return cryptoService.getEthereumUsdRate();
     }
 }

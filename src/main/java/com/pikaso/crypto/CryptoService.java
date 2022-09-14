@@ -1,27 +1,24 @@
 package com.pikaso.crypto;
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class CryptoService implements ApplicationRunner {
+public class CryptoService {
 
-    @Override
-    public void run(ApplicationArguments args) {
-        callService();
-    }
+    public static final String URL_ETH_USD = "https://api.binance.com/api/v3/avgPrice?symbol=ETHUSDT";
 
-    void callService() {
-        final String url = "https://api.binance.com/api/v3/avgPrice?symbol=ETHUSDT";
+    String getEthereumUsdRate() {
 
         final RestTemplate restTemplate = new RestTemplate();
-        final ResponsePriceModel result = restTemplate.getForObject(url, ResponsePriceModel.class);
+        final ResponsePriceModel result = restTemplate.getForObject(URL_ETH_USD, ResponsePriceModel.class);
 
+        String ethPrice = "Error during getting ethereum rate";
         if (ObjectUtils.isNotEmpty(result)) {
-            System.out.println("Ethereum price: " + Math.round(result.getPrice()));
+            ethPrice = String.valueOf(Math.round(result.getPrice()));
+            System.out.println("Ethereum price: " + ethPrice);
         }
+        return ethPrice;
     }
 }
