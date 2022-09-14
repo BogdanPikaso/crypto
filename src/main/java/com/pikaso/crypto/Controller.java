@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
     @Autowired
-    Service service;
+    CryptoService cryptoService;
 
     @GetMapping(path = "get")
     void callService() {
-        service.callService();
+        cryptoService.callService();
     }
 }
