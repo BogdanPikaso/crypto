@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Controller {
 
+    final CryptoService cryptoService;
+
     @Autowired
-    CryptoService cryptoService;
+    public Controller(CryptoService cryptoService) {
+        this.cryptoService = cryptoService;
+    }
 
     @GetMapping(path = "get/eth")
     String getEthereumUsdRate() {

@@ -12,7 +12,7 @@
    <artifactId>crypto</artifactId>
    <version>0.0.1-SNAPSHOT</version>
    <name>crypto</name>
-   <description>project for getting exchange rates of cryprocurrency</description>
+   <description>project for getting exchange rates of cryptocurrency</description>
    <properties>
       <java.version>17</java.version>
    </properties>
@@ -43,6 +43,15 @@
          <artifactId>commons-lang3</artifactId>
          <version>3.12.0</version>
       </dependency>
+
+      <!-- Junit -->
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>4.13.2</version>
+         <scope>test</scope>
+      </dependency>
+
    </dependencies>
 
    <build>
