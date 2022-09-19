@@ -1,17 +1,21 @@
 package com.pikaso.crypto;
 
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,7 +27,7 @@ class CryptoServiceTest {
     @Autowired
     RestTemplate restTemplate;
 
-    @Autowired
+    @Mock
     JavaMailSender javaMailSender;
 
     @Test
@@ -59,10 +63,15 @@ class CryptoServiceTest {
 
     @Test
     void errorMessageIsCorrectWhenResponseIsNull() {
+        mockMailSender();
         RestTemplate mockedRestTemplate = mock(RestTemplate.class);
         cryptoService = new CryptoService(mockedRestTemplate, javaMailSender);
         when(mockedRestTemplate.getForObject(CryptoService.URL_ETH_USD, ResponsePriceModel.class)).thenReturn(null);
         String result = cryptoService.getEthereumUsdRate();
         assertEquals("Error during getting ethereum rate", result);
+    }
+
+    private void mockMailSender() {
+        doNothing().when(javaMailSender).send(any(SimpleMailMessage.class));
     }
 }
